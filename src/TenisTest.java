@@ -2,8 +2,8 @@ public class TenisTest {
     public static void main(String[] args) {
         String jugador1 = "Juan";
         String jugador2 = "Pedro";
-        int marcador_jugador1 = 0;
-        int marcador_jugador2 = 2;
+        int marcador_jugador1 = 4;
+        int marcador_jugador2 = 0;
         int maxima_puntuacion;
         Tenis t = new Tenis(jugador1,jugador2);
 

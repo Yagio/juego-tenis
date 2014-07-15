@@ -1,9 +1,9 @@
 public class Idioma {
     private int idioma;
-    private String[] palabras_eu = {"Love-All", "Fifteen-All", "Thirty-All", "Deuce", "Adventage", "Win", "Love", "Fifteen", "Thirty", "Forty"};
-    private String[] palabras_fr = {"Amour-égaux", "Quinze-égaux", "Trente-égaux", "Diable", "Avantage", "Victoire", "Amour", "Quinze", "Trente", "Quarente"};
-    private String[] palabras_es = {"Cero-iguales", "Quince-iguales", "Treinta-iguales", "Empate", "Ventaja para", "Gana", "Cero", "Quince", "Treinta", "Cuarenta"};
-    private String[] palabras_al = {"Null-gleich", "Füntzehn-gleich", "Dreibig-gleich", "Ziehen", "Vorteil für", "Wunsch", "Null", "Füntzehn", "Dreibig", "Vierzig"};
+    private String[] palabras_eu = {"Love", "Fifteen", "Thirty", "Forty","All", "Deuce", "Adventage", "Win for"};
+    private String[] palabras_fr = {"Amour", "Quinze", "Trente", "Quarente","égaux", "Diable", "Avantage", "Victoire"};
+    private String[] palabras_es = {"Cero", "Quince", "Treinta", "Cuarenta","iguales", "Empate", "Ventaja para", "Gana"};
+    private String[] palabras_al = { "Null", "Füntzehn", "Dreibig", "Vierzig","gleich", "Ziehen", "Vorteil für", "Wunsch"};
 
     public Idioma(int idioma) {
         this.idioma = idioma;

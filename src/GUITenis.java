@@ -58,22 +58,7 @@ public class GUITenis {
         marcadorTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int row = marcadorTable.getSelectedRow();
-                int puntos_jugador1 = (Integer) marcadorTable.getValueAt(row, 0);
-                int puntos_jugador2 = (Integer) marcadorTable.getValueAt(row, 1);
-                String score = (String) marcadorTable.getValueAt(row,2);
-
-                t.cambiar_punto(jugador1, puntos_jugador1);
-                t.cambiar_punto(jugador2, puntos_jugador2);
-
-                marcadorLabel.setText(t.generar_marcador());
-
-                int tamano = marcadorTable.getRowCount();
-                int inicio = row+1;
-                for(int xx= inicio  ; xx < tamano  ; xx++){
-                    DefaultTableModel modelo = (DefaultTableModel)marcadorTable.getModel();
-                    modelo.removeRow(row+1);
-                }
+                eliminar_row();
             }
         });
     }
@@ -103,11 +88,31 @@ public class GUITenis {
 
     }
 
+    public void eliminar_row(){
+        int row = marcadorTable.getSelectedRow();
+        int tamano = marcadorTable.getRowCount();
+        int inicio = row + 1;
+        int puntos_jugador1 = (Integer) marcadorTable.getValueAt(row, 0);
+        int puntos_jugador2 = (Integer) marcadorTable.getValueAt(row, 1);
+        String score = (String) marcadorTable.getValueAt(row,2);
+
+        t.cambiar_punto(jugador1, puntos_jugador1);
+        t.cambiar_punto(jugador2, puntos_jugador2);
+
+        marcadorLabel.setText(score);
+
+        for(int x = inicio; x < tamano; x++){
+            DefaultTableModel modelo = (DefaultTableModel)marcadorTable.getModel();
+            modelo.removeRow(inicio);
+        }
+    }
+
     public static void main(String[] args) {
-        JFrame frame = new JFrame("GUITenis");
+        JFrame frame = new JFrame("Juego de Tenis");
         frame.setContentPane(new GUITenis().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 }

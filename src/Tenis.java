@@ -37,63 +37,17 @@ public class Tenis{
     }
 
     public String obtener_marcador() {
-        String marcador = "";
-        int marcador_temporal = 0;
-        if (puntaje_jugador1 == puntaje_jugador2) {
-            switch (puntaje_jugador1) {
-                case 0:
-                    marcador = "0";
-                    break;
-                case 1:
-                    marcador = "1";
-                    break;
-                case 2:
-                    marcador = "2";
-                    break;
-                default:
-                    marcador = "3";
-                    break;
-            }
-        }else if (puntaje_jugador1>=4 || puntaje_jugador2>=4){
-            int diferencia_marcador = puntaje_jugador1-puntaje_jugador2;
-            if (diferencia_marcador == 1) {
-                marcador = "4,0,1";
-            }
-            else if (diferencia_marcador ==-1){
-                marcador ="4,0,2";
-            }
-            else if(diferencia_marcador>=2){
-                marcador = "5,0,1";
-            }
-            else{
-                marcador = "5,0,2";
-            }
-
-        }else{
-            for (int i=1; i<3; i++){
-                if (i==1) {
-                    marcador_temporal = puntaje_jugador1;
-                }else {
-                    marcador+=",";
-                    marcador_temporal = puntaje_jugador2;
-                }
-                switch(marcador_temporal){
-                    case 0:
-                        marcador+="6";
-                        break;
-                    case 1:
-                        marcador+="7";
-                        break;
-                    case 2:
-                        marcador+="8";
-                        break;
-                    case 3:
-                        marcador+="9";
-                        break;
-                }
-            }
+        String marcador;
+        if (puntaje_jugador1 < 4 && puntaje_jugador2 < 4 && !(puntaje_jugador1 + puntaje_jugador2 == 6)) {
+            String[] puntajes = {"0", "1", "2", "3"};
+            marcador = puntajes[puntaje_jugador1];
+            return (puntaje_jugador1 == puntaje_jugador2) ? (marcador + ",4") : (marcador + "," + puntajes[puntaje_jugador2]);
+        } else {
+            if (puntaje_jugador1 == puntaje_jugador2)
+                return "5";
+            marcador = ((puntaje_jugador1 > puntaje_jugador2) ? nombre_jugador1 : nombre_jugador2);
+            return ((((puntaje_jugador1 - puntaje_jugador2) * (puntaje_jugador1 - puntaje_jugador2)) == 1)) ? "6," + marcador : "7," + marcador;
         }
-        return marcador;
     }
 
     public String generar_marcador(){
@@ -103,26 +57,19 @@ public class Tenis{
         String palabra2;
         String resultado = "";
 
-        switch (marcador.length()) {
-            case 1:
-                resultado = idioma.generar_palabra(Integer.parseInt(marcador));
-                break;
-            case 3:
-                array_marcador = marcador.split(",");
+        if (marcador.length() == 1){
+            resultado = idioma.generar_palabra(Integer.parseInt(marcador));
+        }else if(marcador.length() >= 2){
+            array_marcador = marcador.split(",");
+            if (Integer.parseInt(array_marcador[0]) >= 5 ){
+                palabra1 = idioma.generar_palabra(Integer.parseInt(array_marcador[0]));
+                palabra2 = array_marcador[1];
+                resultado = palabra1 +" "+ palabra2;
+            }else{
                 palabra1 = idioma.generar_palabra(Integer.parseInt(array_marcador[0]));
                 palabra2  = idioma.generar_palabra(Integer.parseInt(array_marcador[1]));
                 resultado = palabra1 + "-" + palabra2;
-                break;
-            case 5:
-                array_marcador = marcador.split(",");
-                palabra1 = idioma.generar_palabra(Integer.parseInt(array_marcador[0]));
-                if (Integer.parseInt(array_marcador[2]) == 1){
-                    palabra2 = nombre_jugador1;
-                }else{
-                    palabra2 = nombre_jugador2;
-                }
-                resultado = palabra1 + " " + palabra2;
-                break;
+            }
         }
 
         return resultado;
