@@ -23,12 +23,23 @@ public class GUITenis {
     private JPanel marcadorPanel;
     private JPanel jugadoresPanel;
     private JScrollPane scrollTable;
-    private String jugador1 = "Juan";
-    private String jugador2 = "Pedro";
+    private JTextField jugador1TextField;
+    private JTextField jugador2TextField;
+    private JPanel marcador2Panel;
+    private JTable marcador2Table;
+    private JScrollPane marcador2Scroll;
+    private JLabel idioma2Label;
+    private JComboBox idioma2comboBox;
+    private String jugador1 = "Jugador1";
+    private String jugador2 = "Jugador2";
+    private String idioma1 = "Español";
+    private String idioma2 =  "Ingles";
     DefaultTableModel model = new DefaultTableModel();
+    DefaultTableModel model2 = new DefaultTableModel();
     Tenis t = new Tenis(jugador1, jugador2);
 
     public GUITenis() {
+
 
         crearTabla();
 
@@ -36,7 +47,17 @@ public class GUITenis {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String value = idiomacomboBox.getSelectedItem().toString();
-                t.setIdioma(value);
+                idioma1 = value;
+                //t.setIdioma(value);
+            }
+        });
+
+        idioma2comboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String value = idioma2comboBox.getSelectedItem().toString();
+                idioma2 = value;
+                //t.setIdioma(value);
             }
         });
 
@@ -52,7 +73,7 @@ public class GUITenis {
         jugador2Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               agregar_marcador(jugador2);
+                agregar_marcador(jugador2);
             }
         });
         marcadorTable.addMouseListener(new MouseAdapter() {
@@ -61,17 +82,47 @@ public class GUITenis {
                 eliminar_row();
             }
         });
+
+
+        jugador1TextField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseExited(MouseEvent e) {
+                t.setNombre_jugador1(jugador1TextField.getText());
+                jugador1 = t.getNombre_jugador1();
+                jugador1Button.setText(jugador1);
+                marcadorTable.getColumnModel().getColumn(0).setHeaderValue("Puntos de " + jugador1);
+                marcador2Table.getColumnModel().getColumn(0).setHeaderValue("Puntos de " + jugador1);
+            }
+        });
+
+        jugador2TextField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseExited(MouseEvent e) {
+                t.setNombre_jugador2(jugador2TextField.getText());
+                jugador2 = t.getNombre_jugador2();
+                jugador2Button.setText(jugador2);
+                marcadorTable.getColumnModel().getColumn(1).setHeaderValue("Puntos de " + jugador2);
+                marcador2Table.getColumnModel().getColumn(1).setHeaderValue("Puntos de " + jugador2);
+            }
+        });
     }
 
     public void crearTabla(){
         marcadorTable = new JTable(model);
+        marcador2Table = new JTable(model2);
 
         model.addColumn("Puntos de "+jugador1);
         model.addColumn("Puntos de "+jugador2);
         model.addColumn("Marcador");
 
+        model2.addColumn("Puntos de "+jugador1);
+        model2.addColumn("Puntos de "+jugador2);
+        model2.addColumn("Marcador");
+
         marcadorTable.setPreferredScrollableViewportSize(new Dimension(400, 100));
+        marcador2Table.setPreferredScrollableViewportSize(new Dimension(400, 100));
         scrollTable.setViewportView(marcadorTable);
+        marcador2Scroll.setViewportView(marcador2Table);
     }
 
     public void agregar_marcador(String nombre_jugador){
@@ -81,11 +132,15 @@ public class GUITenis {
         t.punto_ganado(nombre_jugador);
         puntos_jugador1 = t.obtener_puntaje(jugador1);
         puntos_jugador2 = t.obtener_puntaje(jugador2);
+        t.setIdioma(idioma1);
         marcador = t.generar_marcador();
 
         marcadorLabel.setText(marcador);
         model.addRow(new Object[]{puntos_jugador1, puntos_jugador2, marcador});
 
+        t.setIdioma(idioma2);
+        //model2.insertRow(0,new Object[]{puntos_jugador1, puntos_jugador2, t.generar_marcador()});
+        model2.addRow(new Object[]{puntos_jugador1, puntos_jugador2, t.generar_marcador()});
     }
 
     public void eliminar_row(){
@@ -108,11 +163,26 @@ public class GUITenis {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Juego de Tenis");
-        frame.setContentPane(new GUITenis().mainPanel);
+        GUITenis gi = new GUITenis();
+        JFrame frame = new JFrame("Jugadores");
+        frame.setContentPane(gi.jugadoresPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
-        frame.setLocationRelativeTo(null);
+        frame.setLocation(100,100);
         frame.setVisible(true);
+
+        JFrame frame2 = new JFrame("Marcador");
+        frame2.setContentPane(gi.marcadorPanel);
+        frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame2.pack();
+        frame2.setLocation(500,100);
+        frame2.setVisible(true);
+
+        JFrame frame3 = new JFrame("Marcador Inverso");
+        frame3.setContentPane(gi.marcador2Panel);
+        frame3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame3.pack();
+        frame3.setLocation(500,300);
+        frame3.setVisible(true);
     }
 }

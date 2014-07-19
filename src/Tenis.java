@@ -36,6 +36,22 @@ public class Tenis{
         }
     }
 
+    public void setNombre_jugador1(String nombre_jugador1) {
+        this.nombre_jugador1 = nombre_jugador1;
+    }
+
+    public void setNombre_jugador2(String nombre_jugador2) {
+        this.nombre_jugador2 = nombre_jugador2;
+    }
+
+    public String getNombre_jugador1() {
+        return nombre_jugador1;
+    }
+
+    public String getNombre_jugador2() {
+        return nombre_jugador2;
+    }
+
     public String obtener_marcador() {
         String marcador;
         if (puntaje_jugador1 < 4 && puntaje_jugador2 < 4 && !(puntaje_jugador1 + puntaje_jugador2 == 6)) {
